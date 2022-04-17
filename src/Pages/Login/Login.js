@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import './Login.css';
 import { Link } from "react-router-dom";
-import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../firebase.init";
 const Login = () => {
     // login with google and github
@@ -10,22 +10,32 @@ const Login = () => {
     const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
 
     // login with email and password
+    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
+    const emailRef = useRef('');
+    const passwordRef = useRef('');
+    const handleSubmit = event => {
+        event.preventDefault();
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        signInWithEmailAndPassword(email, password);
+    }
 
     return (
         <section className="login-form">
             <Container>
                 <h1 className="text-center mb-4">Login</h1>
                 <div className="container-form">
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control ref={emailRef} type="email" placeholder="Enter email" required />
                         </Form.Group>
 
                         <Form.Group className="mb-2" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control ref={passwordRef} type="password" placeholder="Password" required />
                         </Form.Group>
+                        <p className="text-danger">{error?.message}</p>
                         <Form.Group className="mb-3 d-flex justify-content-between" controlId="formBasicCheckbox">
                             <Form.Check type="checkbox" label="Remember me" />
                             <span style={{ cursor: 'pointer' }} className="text-end text-primary mb-2">Forget Password</span>
