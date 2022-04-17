@@ -1,0 +1,17 @@
+.banner {
+
+    padding: 100px 0;
+}
+
+.banner h1 {
+    font-size: 45px;
+}
+
+.banner p {
+    font-size: 20px;
+}
+
+.banner button {
+    padding: 8px 30px;
+    border-radius: 0;
+}
