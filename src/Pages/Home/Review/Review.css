@@ -1,0 +1,14 @@
+.card-details .card-img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card-details {
+    padding: 30px;
+}
+
+.star {
+    color: #FEC78B;
+}

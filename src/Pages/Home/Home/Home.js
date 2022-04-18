@@ -3,6 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import useCourses from "../../../hooks/useCourses";
 import Course from "../../Courses/Course/Course";
 import Banner from "../Banner/Banner";
+import Reviews from "../Reviews/Reviews";
 import './Home.css';
 const Home = () => {
     const { courses } = useCourses();
@@ -18,6 +19,7 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
+            <Reviews></Reviews>
         </div>
     )
 }
