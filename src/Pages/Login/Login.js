@@ -4,11 +4,13 @@ import './Login.css';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../firebase.init";
-import { async } from "@firebase/util";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
     // login with google and github
-    const [signInWithGoogle, googleUser, googlLoading, googleError] = useSignInWithGoogle(auth);
-    const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
+    const [signInWithGoogle, googleError] = useSignInWithGoogle(auth);
+    const [signInWithGithub, githubError] = useSignInWithGithub(auth);
 
     // login with email and password
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
@@ -25,7 +27,7 @@ const Login = () => {
     const handleResetPassword = () => {
         const email = emailRef.current.value;
         sendPasswordResetEmail(email);
-        alert('sent email')
+        toast('sent reset password');
     }
     // The page that users are trying to visit has been redirected
     let navigate = useNavigate();
@@ -67,6 +69,7 @@ const Login = () => {
                         </div>
                         <p className="text-center">Don't have an account? <Link to="/registration" style={{ cursor: 'pointer', textDecoration: 'none' }} className="text-primary">Register here</Link></p>
                     </Form>
+                    <ToastContainer />
                 </div>
             </Container >
         </section >
