@@ -39,7 +39,7 @@
     color: #FFC78B;
 }
 
-.card:hover img {
+.card:hover img:not(.my-img) {
     transform: scale(1.1);
     transition: all .50s;
 }
