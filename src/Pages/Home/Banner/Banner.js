@@ -5,7 +5,7 @@ const Banner = () => {
     return (
         <section className="banner">
             <Container>
-                <Row>
+                <Row xs={1} md={2} className="g-3">
                     <Col className="d-flex align-items-center justify-content-center">
                         <div>
                             <h1>Experience Better underline

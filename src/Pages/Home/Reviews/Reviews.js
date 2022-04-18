@@ -15,7 +15,7 @@ const Reviews = () => {
             <Container>
                 <h1 className="text-center mb-5">What Students<br />
                     Think and Say About Web Eductation</h1>
-                <Row xs={1} md={2} lg={3} className="g-4">
+                <Row md={1} lg={3} className="g-4">
                     {
                         reviews.map(review => <Review key={review.id} review={review} />)
                     }

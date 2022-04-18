@@ -1,27 +1,26 @@
+import { async } from "@firebase/util";
+import { updateProfile } from "firebase/auth";
 import React from "react";
 import { Container, Form, Button } from "react-bootstrap";
-import { useCreateUserWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 const Registration = () => {
+    let navigate = useNavigate();
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
-    console.log(googleUser, googleError);
-    console.log(githubUser, githubError)
+
     // Registration email and password
-    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
-    console.log(user)
-    const handleSubmit = event => {
+    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+
+    const handleSubmit = (event) => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
         createUserWithEmailAndPassword(email, password);
+        navigate('/')
     }
-    let navigate = useNavigate();
-    let location = useLocation();
-    let from = location.state?.from?.pathname || '/';
-    navigate(from, { replace: true })
     return (
         <section className="login-form">
             <Container>

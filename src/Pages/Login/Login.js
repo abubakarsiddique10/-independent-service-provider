@@ -2,18 +2,13 @@ import React, { useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import './Login.css';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../firebase.init";
+import { async } from "@firebase/util";
 const Login = () => {
     // login with google and github
     const [signInWithGoogle, googleUser, googlLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
-
-    // The page that users are trying to visit has been redirected
-    let navigate = useNavigate();
-    let location = useLocation();
-    let from = location.state?.from?.pathname || "/";
-    navigate(from, { replace: true });
 
     // login with email and password
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
@@ -25,8 +20,20 @@ const Login = () => {
         const password = passwordRef.current.value;
         signInWithEmailAndPassword(email, password);
     }
-
-
+    // send reset password
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
+    const handleResetPassword = () => {
+        const email = emailRef.current.value;
+        sendPasswordResetEmail(email);
+        alert('sent email')
+    }
+    // The page that users are trying to visit has been redirected
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+    if (user) {
+        navigate(from, { replace: true });
+    }
     return (
         <section className="login-form">
             <Container>
@@ -45,7 +52,7 @@ const Login = () => {
                         <p className="text-danger">{error?.message}</p>
                         <Form.Group className="mb-3 d-flex justify-content-between" controlId="formBasicCheckbox">
                             <Form.Check type="checkbox" label="Remember me" />
-                            <span style={{ cursor: 'pointer' }} className="text-end text-primary mb-2">Forget Password</span>
+                            <span onClick={handleResetPassword} style={{ cursor: 'pointer' }} className="text-end text-primary mb-2">Forget Password</span>
                         </Form.Group>
                         <p className="text-danger">{googleError?.message || githubError?.message}</p>
                         <Button className="w-100 mb-3 fs-5" variant="primary" type="submit">
