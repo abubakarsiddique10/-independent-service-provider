@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useCreateUserWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 const Registration = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -18,6 +18,10 @@ const Registration = () => {
         const password = event.target.password.value;
         createUserWithEmailAndPassword(email, password);
     }
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || '/';
+    navigate(from, { replace: true })
     return (
         <section className="login-form">
             <Container>

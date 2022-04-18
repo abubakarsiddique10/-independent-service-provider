@@ -5,7 +5,6 @@ import Course from "../Course/Course";
 import './Courses.css';
 const Courses = () => {
     const { courses } = useCourses();
-    console.log(courses)
     return (
         <section style={{ background: "#F4F6F9", Zindex: '0' }}>
             <Container>

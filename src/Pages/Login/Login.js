@@ -1,13 +1,19 @@
 import React, { useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import './Login.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../firebase.init";
 const Login = () => {
     // login with google and github
     const [signInWithGoogle, googleUser, googlLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
+
+    // The page that users are trying to visit has been redirected
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+    navigate(from, { replace: true });
 
     // login with email and password
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
@@ -19,6 +25,7 @@ const Login = () => {
         const password = passwordRef.current.value;
         signInWithEmailAndPassword(email, password);
     }
+
 
     return (
         <section className="login-form">
