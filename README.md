@@ -1,8 +1,11 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is website link [Web Education](https://web-education-990a6.web.app/).
 
-## Available Scripts
+## Web Education
+-  HTML, CSS, REACT BOOTSTRAP
+- JAVASCRIPT FRAMWORK REACT.JS
+- FIREBASE AUTHENTICATION
 
 In the project directory, you can run:
 
